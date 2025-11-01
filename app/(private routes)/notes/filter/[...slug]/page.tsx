@@ -3,18 +3,19 @@ import { fetchNotes } from '@/lib/api/serverApi';
 import { Metadata } from 'next';
 import type { NoteTag } from '@/types/note';
 
-type Props = {
-  params: Promise<{ slug: string[] }>;
-};
+type SyncProps = { params: { slug?: string[] } };
+type AsyncProps = { params: Promise<{ slug?: string[] }> };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
+export async function generateMetadata({
+  params,
+}: SyncProps): Promise<Metadata> {
+  const slug = (await Promise.resolve(params)).slug;
   const rawTag = slug?.[0];
   const tag: NoteTag | undefined =
     rawTag === 'All' ? undefined : (rawTag as NoteTag);
 
-  const title = `Notes filtered by: ${tag ?? 'All'} — NoteHub`;
-  const description = `Browse your notes filtered by "${tag ?? 'All'}" in NoteHub. Quickly find the ideas and tasks you need.`;
+  const title = `Notes filtered by: ${tag ?? 'All'} — WiseNote`;
+  const description = `Browse your notes filtered by "${tag ?? 'All'}" in WiseNote. Quickly find the ideas and tasks you need.`;
 
   return {
     title,
@@ -35,9 +36,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function NotesPage({ params }: Props) {
+export default async function NotesPage({ params }: AsyncProps) {
   const { slug } = await params;
-  const tag = slug[0] === 'All' ? '' : slug?.[0];
-  const rawData = await fetchNotes('', 1, tag);
-  return <NotesClient initialData={rawData} initialTag={tag} />;
+  const tag = slug?.[0] ?? 'All';
+
+  const allowedTags: NoteTag[] = [
+    'All',
+    'Todo',
+    'Work',
+    'Personal',
+    'Meeting',
+    'Shopping',
+  ];
+
+  const normalizedTag = allowedTags.includes(tag as NoteTag)
+    ? (tag as NoteTag)
+    : 'All';
+
+  const rawData = await fetchNotes('', 1, normalizedTag);
+
+  return <NotesClient initialData={rawData} initialTag={normalizedTag} />;
 }

@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+
 }
 
 .formGroup {
@@ -9,7 +10,7 @@
     flex-direction: column;
     font-size: 14px;
     font-weight: 500;
-    color: #5B4756;
+    color: #274C7C;
 }
 
 .input,
@@ -32,23 +33,23 @@
 .submitButton {
     padding: 8px 16px;
     font-size: 16px;
-    background: #844D73;
+    background: #657A9A;
     color: #fff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.15);
+    box-shadow: 0 4px 6px rgba(17, 33, 54, 0.25), inset 0 1px 2px rgba(255, 255, 255, 0.15);
     transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .submitButton:hover {
     transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 6px 12px rgba(150, 104, 159, 0.5), inset 0 1px 3px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 6px 12px rgba(212, 218, 227, 0.89), inset 0 1px 3px rgba(255, 255, 255, 0.2);
 }
 
 .submitButton:active {
     transform: translateY(1px) scale(0.98);
-    box-shadow: 0 2px 4px rgba(208, 128, 232, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    box-shadow: 0 2px 4px rgba(184, 194, 209, 0.81), inset 0 1px 1px rgba(255, 255, 255, 0.1);
 }
 
 .submitButton:disabled {
@@ -59,18 +60,18 @@
 .cancelButton {
     padding: 8px 16px;
     font-size: 16px;
-    background-color: #844D73;
-    color: #f2eff5;
-    border: 1px solid #844D73;
+    background-color: #65949A;
+    color: #113613;
+    border: 1px solid #65949A;
     border-radius: 6px;
     cursor: pointer;
     transition: background-color 0.2s ease;
 }
 
 .cancelButton:hover {
-    background-color: #9d89ab;
+    background-color: #80A7AC;
     transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 6px 12px rgba(136, 90, 143, 0.5), inset 0 1px 3px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 6px 12px rgba(128, 167, 172, 0.70), inset 0 1px 3px rgba(255, 255, 255, 0.2);
 }
 
 .error {

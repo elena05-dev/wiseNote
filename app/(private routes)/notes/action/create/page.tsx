@@ -3,13 +3,13 @@ import css from './CreateNote.module.css';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'HubNotes | Create Note',
+  title: 'WiseNote | Create Note',
   description:
-    'Create a new note in HubNotes. Add a title, content, and tag to keep your thoughts organized.',
+    'Create a new note in WiseNote. Add a title, content, and tag to keep your thoughts organized.',
   openGraph: {
-    title: 'HubNotes | Create Note',
+    title: 'WiseNote | Create Note',
     description:
-      'Create a new note in HubNotes. Add a title, content, and tag to keep your thoughts organized.',
+      'Create a new note in WiseNote. Add a title, content, and tag to keep your thoughts organized.',
     url: 'https://09-auth-azure-eight.vercel.app/',
     images: [
       {

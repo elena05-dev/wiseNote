@@ -15,6 +15,11 @@ export interface Note {
   updatedAt: string;
 }
 
+export interface FetchNotesResponse {
+  notes: Note[];
+  totalPages: number;
+}
+
 export interface FetchNotesParams {
   page?: number;
   perPage?: number;
@@ -22,20 +27,9 @@ export interface FetchNotesParams {
   tag?: NoteTag;
 }
 
-export interface FetchNotesResponse {
-  notes: Note[];
-  totalPages: number;
-}
-
 export interface CreateNoteData {
   title: string;
   content: string;
   tag: NoteTag;
   createdAt?: string;
-}
-
-export interface UpdateNoteData {
-  title?: string;
-  content?: string;
-  tag?: NoteTag;
 }

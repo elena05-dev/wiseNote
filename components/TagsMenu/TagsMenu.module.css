@@ -4,28 +4,28 @@
 }
 
 .menuButton {
-    background: #416A6E;
-    color: #f2eff5;
+    background: #84A8D7;
+    color: #2E473C;
 
     padding: 8px 16px;
     font-size: 16px;
     border-radius: 8px;
+    border: none;
     cursor: pointer;
-    box-shadow: 0 4px 6px #416A6E, inset 0 1px 2px rgba(255, 255, 255, 0.15);
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+
 }
 
 .menuButton:hover {
     transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 6px 12px #5e675c, inset 0 1px 3px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 6px 12px #A6C0E2, inset 0 1px 3px rgba(255, 255, 255, 0.2);
 }
 
 .menuList {
     position: absolute;
     top: calc(100% + 6px);
     left: 0;
-    background-color: #416A6E;
-    border: 1px solid #416A6E;
+    background-color: #A6C0E2;
+    border: 1px solid #A6C0E2;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     padding: 6px 0;
@@ -42,7 +42,7 @@
 .menuLink {
     display: block;
     padding: 8px 16px;
-    color: #f2eff5;
+    color: #1D3759;
     text-decoration: none;
     font-size: 15px;
     transition: transform 0.1s ease, background-color 0.2s ease, color 0.2s ease;
@@ -54,8 +54,8 @@
 }
 
 .menuLink:hover {
-    background-color: #546566;
+    background-color: #C9D9EE;
     border-radius: 6px;
-    color: #f2eff5;
+    color: #1D3759;
     transform: translateY(2px);
 }

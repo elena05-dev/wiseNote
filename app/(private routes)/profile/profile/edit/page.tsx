@@ -10,7 +10,7 @@ export default function EditProfilePage() {
   const router = useRouter();
   const { user, setAuth } = useAuthStore();
 
-  const [username, setUsername] = useState(user?.username || '');
+  const [name, setName] = useState(user?.name || '');
   const [loading, setLoading] = useState(false);
 
   const handleSave = async (e: React.FormEvent) => {
@@ -20,7 +20,7 @@ export default function EditProfilePage() {
     try {
       setLoading(true);
 
-      const updatedUser = await updateUserProfile({ username });
+      const updatedUser = await updateUserProfile({ name });
       setAuth(updatedUser);
       router.push('/profile');
     } catch (err) {
@@ -42,12 +42,12 @@ export default function EditProfilePage() {
 
         <form onSubmit={handleSave} className={css.profileInfo}>
           <div className={css.usernameWrapper}>
-            <label htmlFor="username">Username:</label>
+            <label htmlFor="name">Name:</label>
             <input
-              id="username"
+              id="name"
               type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               required
               className={css.input}
               disabled={loading}

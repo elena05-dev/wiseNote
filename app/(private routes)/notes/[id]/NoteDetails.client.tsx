@@ -16,10 +16,13 @@ export default function NoteDetails() {
     isLoading,
     isError,
     error,
+    isFetching,
   } = useQuery<Note>({
     queryKey: ['note', id],
     queryFn: () => getNoteById(id),
     enabled: !!id,
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 5,
   });
 
   if (isLoading) {
@@ -41,19 +44,31 @@ export default function NoteDetails() {
     return <p>Note not found.</p>;
   }
 
+  const createdAt = note.createdAt
+    ? new Date(note.createdAt).toLocaleString()
+    : '—';
+  const updatedAt = note.updatedAt
+    ? new Date(note.updatedAt).toLocaleString()
+    : '—';
+
   return (
     <div className={css.container}>
       <div className={css.item}>
         <div className={css.header}>
           <h2>{note.title}</h2>
-          <span className={css.tag}>{note.tag}</span>
+          {note.tag && <span className={css.tag}>{note.tag}</span>}
         </div>
 
         <div className={css.content}>{note.content}</div>
 
         <div className={css.date}>
-          Created: {new Date(note.createdAt).toLocaleDateString()} <br />
-          Updated: {new Date(note.updatedAt).toLocaleDateString()}
+          <p>
+            <strong>Created:</strong> {createdAt}
+          </p>
+          <p>
+            <strong>Updated:</strong> {updatedAt}
+          </p>
+          {isFetching && <small>Refreshing data...</small>}
         </div>
 
         <button className={css.backBtn} onClick={() => router.back()}>

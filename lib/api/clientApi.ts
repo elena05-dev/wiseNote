@@ -6,6 +6,7 @@ import type { User } from '@/types/user';
 import type { Note } from '@/types/note';
 import { useAuthStore } from '@/lib/store/authStore';
 import type { CreateNoteData } from '@/types/note';
+import { FetchNotesParams, FetchNotesResponse } from '@/types/note';
 
 export async function fetchCurrentUser(): Promise<User | null> {
   try {
@@ -66,46 +67,132 @@ export async function updateUserProfile(updates: Partial<User>): Promise<User> {
   return data;
 }
 
-export type FetchNotesParams = {
-  page?: number;
-  search?: string;
-  tag?: string;
-  perPage?: number;
+interface NoteFromServer {
+  _id: string;
+  title: string;
+  content: string;
+  tag: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface NotesApiResponse {
+  status: number;
+  message: string;
+  data: {
+    data: NoteFromServer[];
+    page: number;
+    perPage: number;
+    totalItems: number;
+    totalPages: number;
+    hasPreviousPage: boolean;
+    hasNextPage: boolean;
+  };
+}
+
+export const getNotesClient = async (
+  params: FetchNotesParams,
+): Promise<FetchNotesResponse> => {
+  const query = new URLSearchParams();
+
+  if (params.page) query.append('page', String(params.page));
+  if (params.perPage) query.append('perPage', String(params.perPage));
+  if (params.search) query.append('search', params.search);
+  if (params.tag && params.tag !== 'All') query.append('tag', params.tag);
+
+  const res = await fetch(`/api/notes?${query.toString()}`, {
+    method: 'GET',
+    credentials: 'include',
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch notes');
+  }
+
+  const data: NotesApiResponse = await res.json();
+  console.log('📦 Ответ от сервера:', data);
+
+  const notes: Note[] = data.data.data.map((note) => ({
+    id: note._id,
+    title: note.title,
+    content: note.content,
+    tag: note.tag as Note['tag'],
+    createdAt: note.createdAt,
+    updatedAt: note.updatedAt,
+  }));
+
+  return {
+    notes,
+    totalPages: data.data.totalPages,
+  };
 };
 
-export type FetchNotesResponse = {
-  notes: Note[];
-  totalPages: number;
+export const getNoteById = async (id: string): Promise<Note> => {
+  const res = await fetch(`/api/notes/${id}`, {
+    method: 'GET',
+    credentials: 'include',
+  });
+
+  if (!res.ok) {
+    throw new Error(`Failed to fetch note with id ${id}`);
+  }
+
+  const data = await res.json();
+
+  return {
+    id: data._id,
+    title: data.title,
+    content: data.content,
+    tag: data.tag as Note['tag'],
+    createdAt: data.createdAt,
+    updatedAt: data.updatedAt,
+  };
 };
 
-export async function getNotesClient({
-  page = 1,
-  search = '',
-  tag = '',
-  perPage = 12,
-}: FetchNotesParams = {}): Promise<FetchNotesResponse> {
-  const params: Record<string, string | number> = { page, perPage };
+export const createNote = async (noteData: CreateNoteData): Promise<Note> => {
+  const res = await fetch('/api/notes', {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(noteData),
+  });
 
-  if (search) params.search = search;
+  if (!res.ok) {
+    throw new Error('Failed to create note');
+  }
 
-  if (tag && tag.toLowerCase() !== 'all') params.tag = tag;
+  const data = await res.json();
 
-  const res = await nextServer.get<FetchNotesResponse>('/notes', { params });
+  return {
+    id: data._id,
+    title: data.title,
+    content: data.content,
+    tag: data.tag as Note['tag'],
+    createdAt: data.createdAt,
+    updatedAt: data.updatedAt,
+  };
+};
 
-  return res.data;
-}
+export const deleteNote = async (id: string): Promise<void> => {
+  const res = await fetch(`/api/notes/${id}`, {
+    method: 'DELETE',
+    credentials: 'include',
+  });
 
-export async function getNoteById(id: string): Promise<Note> {
-  const { data } = await nextServer.get<Note>(`/notes/${id}`);
-  return data;
-}
+  if (!res.ok) {
+    throw new Error('Failed to delete note');
+  }
+};
 
-export async function createNote(note: CreateNoteData): Promise<Note> {
-  const { data } = await nextServer.post<Note>('/notes', note);
-  return data;
-}
+export async function updateNote(id: string, data: Partial<Note>) {
+  const res = await fetch(`/api/notes/${id}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
 
-export async function deleteNote(id: string): Promise<Note | null> {
-  const { data } = await nextServer.delete<Note>(`/notes/${id}`);
-  return data ?? null;
+  if (!res.ok) throw new Error('Failed to update note');
+  return res.json();
 }

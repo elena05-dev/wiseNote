@@ -5,4 +5,12 @@
     font-size: 16px;
     border: 1px solid #fff;
     border-radius: 6px;
+    border-color: #719BD1;
+}
+
+.input:focus {
+    outline: none;
+    border-color: #284C7B;
+    box-shadow: 0 0 0 4px rgba(201, 217, 238, 0.88);
+
 }

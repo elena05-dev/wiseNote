@@ -1,12 +1,12 @@
-/* =========================
-   Mobile-first (до 768px)
-========================= */
+.name {
+    color: #C2883D;
+    font-size: 24px;
+    font-family: "Great Vibes", cursive;
+    font-weight: 600;
+    font-style: normal;
+    text-transform: capitalize;
+    letter-spacing: 2px;
 
-.userEmail {
-    color: #A15E8C;
-    font-size: 18px;
-    font-family: var(--font-agbalumo);
-    padding-bottom: 6px;
 }
 
 .userBlock {
@@ -19,42 +19,40 @@
 .logoutButton {
     background: transparent;
     border: none;
-    color: #5B4756;
-    padding: 0.3rem 0.6rem;
+    color: #3D77C2;
+
 
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 16px;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .logoutButton:hover {
 
-    color: #382b3d;
+    color: #32619F;
 }
 
 .navigationItem {
     display: flex;
     flex-direction: column;
-    /* мобилка - колонка */
     align-items: center;
     justify-content: center;
 }
 
 .navigationLink {
     text-decoration: none;
-    color: #5B4756;
-    font-size: 1rem;
+    color: #3D77C2;
+    font-size: 16px;
     text-align: center;
 }
 
 .navigationLink:hover {
-    color: #382b3d;
+    color: #32619F;
 }
 
 .navigationList {
     display: flex;
     flex-direction: column;
-    /* мобилка - колонка */
     gap: 1rem;
 }
 
@@ -69,13 +67,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
 
 }
 
-/* =========================
-   Планшет и десктоп (min-width: 768px)
-========================= */
+
 @media (min-width: 768px) {
 
     .userBlock {

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useQuery, keepPreviousData } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useDebounce } from 'use-debounce';
 import { getNotesClient } from '@/lib/api/clientApi';
 import NoteList from '@/components/NoteList/NoteList';
@@ -9,11 +9,17 @@ import Pagination from '@/components/Pagination/Pagination';
 import SearchBox from '@/components/SearchBox/SearchBox';
 import Link from 'next/link';
 import css from './NotesPage.module.css';
-import { Note } from '@/types/note';
+import FloatingTagsMenu from '@/components/TagsMenu/FloatingTagsMenu';
+
+import type {
+  FetchNotesResponse,
+  NoteTag,
+  FetchNotesParams,
+} from '@/types/note';
 
 interface NotesClientProps {
-  initialData: { notes: Note[]; totalPages: number };
-  initialTag: string;
+  initialData: FetchNotesResponse;
+  initialTag: NoteTag;
 }
 
 export default function NotesClient({
@@ -23,26 +29,26 @@ export default function NotesClient({
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
   const [debouncedSearch] = useDebounce(search, 500);
-  const [tag, setTag] = useState(initialTag);
+  const [tag, setTag] = useState<NoteTag>(initialTag);
 
   useEffect(() => {
     setTag(initialTag);
     setPage(1);
   }, [initialTag]);
 
-  const { data, isLoading, error } = useQuery({
+  const queryParams: FetchNotesParams = {
+    page,
+    search: debouncedSearch,
+    tag,
+  };
+
+  const { data, isLoading, isFetching, error } = useQuery<FetchNotesResponse>({
     queryKey: ['notes', page, debouncedSearch, tag],
-    queryFn: () =>
-      getNotesClient({
-        page,
-        search: debouncedSearch,
-        tag: tag,
-      }),
-    placeholderData: keepPreviousData,
+    queryFn: () => getNotesClient(queryParams),
     initialData,
-    refetchOnMount: false,
+    refetchOnMount: true,
   });
-  console.log(data);
+
   const handleSearchChange = (value: string) => {
     setSearch(value);
     setPage(1);
@@ -55,32 +61,37 @@ export default function NotesClient({
   return (
     <div className={css.app}>
       <header className={css.toolbar}>
+        <div className={css.pageHeader}>
+          <h1>{tag ? ` ${tag}` : 'All Notes'}</h1>
+        </div>
         <SearchBox value={search} onChange={handleSearchChange} />
-        <Link href="/notes/action/create" className={css.button}>
-          Create note
+        <Link href="/notes/action/create" className={css.floatingBtn}>
+          +
         </Link>
       </header>
-
+      <FloatingTagsMenu />
+      <Link href="/notes/action/create" className={css.floatingBtn}>
+        +
+      </Link>
       {error && (
         <div className={css.error}>
           Error:{' '}
           {error instanceof Error ? error.message : 'Something went wrong'}
         </div>
       )}
-
-      {data?.notes?.length ? (
-        <>
-          <NoteList notes={data.notes} />
-          {data.totalPages > 1 && (
-            <Pagination
-              pageCount={data.totalPages}
-              onPageChange={handlePageChange}
-              currentPage={page - 1}
-            />
-          )}
-        </>
+      {isLoading || isFetching ? (
+        <div className={css.loader}></div>
+      ) : data?.notes?.length ? (
+        <NoteList notes={data.notes} />
       ) : (
-        !isLoading && <div className={css.noNotes}>No notes found</div>
+        <div className={css.noNotes}>No notes found</div>
+      )}
+      {data?.totalPages > 1 && (
+        <Pagination
+          pageCount={data.totalPages}
+          onPageChange={handlePageChange}
+          currentPage={page - 1}
+        />
       )}
     </div>
   );

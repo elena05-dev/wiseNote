@@ -27,12 +27,11 @@ export const useNoteStore = create<NoteStore>()(
         set((state) => ({ draft: { ...state.draft, ...note } })),
       clearDraft: () => set({ draft: initialDraft }),
 
-      // здесь добавляем флаг формы
       isFormOpen: false,
       setIsFormOpen: (open) => set({ isFormOpen: open }),
     }),
     {
-      name: 'note-draft', // ключ в localStorage
+      name: 'note-draft',
     },
   ),
 );

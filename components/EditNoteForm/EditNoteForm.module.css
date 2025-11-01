@@ -1,0 +1,49 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+
+.input,
+.textarea,
+.select {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.button {
+    width: 150px;
+    height: 30px;
+    margin: 0 auto;
+    background-color: #CD9E60;
+    color: #1C3759;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.button:disabled {
+    background-color: #98C3AD;
+    cursor: not-allowed;
+}
+
+.closeButton {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: transparent;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+}

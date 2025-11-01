@@ -1,17 +1,11 @@
-/* =========================
-   Mobile-first
-========================= */
-
 .container {
     display: flex;
     flex-direction: column;
-    /* мобильная версия: одна колонка */
     min-height: 100vh;
 }
 
 .sidebar {
     display: none;
-    /* скрыт на мобильных */
     width: 250px;
     height: 100vh;
 
@@ -23,35 +17,25 @@
 
 .notesWrapper {
     width: 100%;
-    /* занимает всю ширину на мобильных */
     padding: 16px;
     box-sizing: border-box;
 }
 
-/* =========================
-   Планшет и десктоп
-========================= */
+
 @media (min-width: 768px) {
     .container {
         flex-direction: row;
-        /* две колонки: sidebar + контент */
     }
 
     .sidebar {
         display: block;
-        /* показываем сайдбар */
-
-        /* фиксируем слева */
+        border-right: 2px solid rgba(39, 76, 124, 0.41);
         top: 0;
         left: 0;
         height: auto;
-
     }
 
     .notesWrapper {
-
-
-        /* сдвигаем контент под сайдбар */
         width: 100%;
     }
 }

@@ -20,3 +20,16 @@
     position: relative;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
+
+.closeButton {
+    position: absolute;
+    top: 2px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    fill: #405c4e;
+    width: 8px;
+    height: 14px;
+}

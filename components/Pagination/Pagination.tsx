@@ -14,8 +14,8 @@ const Pagination: React.FC<PaginationProps> = ({
 }) => {
   return (
     <ReactPaginate
-      previousLabel={'← Previous'}
-      nextLabel={'Next →'}
+      previousLabel={'← '}
+      nextLabel={' →'}
       pageCount={pageCount}
       onPageChange={onPageChange}
       forcePage={currentPage}

@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
         Cookie: cookieStore.toString(),
       },
     });
-
+    console.log(res.data);
     return NextResponse.json(res.data, { status: res.status });
   } catch (error) {
     if (isAxiosError(error)) {

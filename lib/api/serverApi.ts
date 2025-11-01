@@ -212,6 +212,12 @@ export async function getNotesWithPaginationServer(
   return { notes: response.data, totalPages };
 }
 
+type GetNoteResponse = {
+  status: number;
+  message: string;
+  data: Note;
+};
+
 export async function getNoteByIdServer(id: string): Promise<Note> {
   const cookieStore = await cookies();
   const cookieStr = cookieStore
@@ -219,11 +225,11 @@ export async function getNoteByIdServer(id: string): Promise<Note> {
     .map(({ name, value }) => `${name}=${value}`)
     .join('; ');
 
-  const response = await nextServer.get<Note>(`/notes/${id}`, {
+  const response = await nextServer.get<GetNoteResponse>(`/notes/${id}`, {
     headers: { Cookie: cookieStr },
   });
 
-  return response.data;
+  return response.data.data;
 }
 
 export async function createNoteServer(

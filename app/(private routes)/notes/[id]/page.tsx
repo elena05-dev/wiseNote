@@ -20,10 +20,10 @@ export async function generateMetadata({
   const note: Note | null = await getNoteByIdServer(noteId);
 
   return {
-    title: `NoteHub : ${note.title}`,
+    title: `WiseNote : ${note.title}`,
     description: note.content.slice(0, 160),
     openGraph: {
-      title: `NoteHub : ${note.title}`,
+      title: `WiseNote : ${note.title}`,
       description: note.content.slice(0, 160),
       url: `https://09-auth-azure-eight.vercel.app/`,
       images: [

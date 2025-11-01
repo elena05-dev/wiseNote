@@ -21,17 +21,15 @@ export default function TagsMenu({
   onLinkClick?: () => void;
 }) {
   const [isOpen, setIsOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null); // ссылка на контейнер
+  const menuRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
 
   const toggleMenu = () => setIsOpen((prev) => !prev);
 
-  // Закрываем подменю при смене страницы
   useEffect(() => {
     setIsOpen(false);
   }, [pathname]);
 
-  // Закрытие меню при клике вне
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {

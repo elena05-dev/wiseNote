@@ -20,7 +20,7 @@
     font-weight: 600;
     text-align: center;
     margin-bottom: 8px;
-    color: #545292;
+    color: #274C7C;
 }
 
 .formGroup {
@@ -28,7 +28,7 @@
     flex-direction: column;
     font-size: 14px;
     font-weight: 500;
-    color: #545292;
+    color: #274C7C;
 }
 
 .input {
@@ -48,7 +48,7 @@
 .submitButton {
     padding: 8px 16px;
     font-size: 16px;
-    background-color: #745f9b;
+    background-color: #27767C;
     color: #e6e1ec;
     border: none;
     border-radius: 4px;
@@ -59,12 +59,12 @@
 
 .submitButton:hover {
     transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 6px 12px rgba(160, 95, 230, 0.5), inset 0 1px 3px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 6px 12px rgba(50, 152, 159, 0.63), inset 0 1px 3px rgba(255, 255, 255, 0.2);
 }
 
 .submitButton:active {
     transform: translateY(1px) scale(0.98);
-    box-shadow: 0 2px 4px rgba(208, 128, 232, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    box-shadow: 0 2px 4px rgba(28, 85, 89, 0.41), inset 0 1px 1px rgba(255, 255, 255, 0.1);
 }
 
 .error {

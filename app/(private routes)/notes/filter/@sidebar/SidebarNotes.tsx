@@ -14,9 +14,6 @@ const TAGS: NoteTag[] = [
 export default function SidebarNotes() {
   return (
     <div className={css.sidebarContent}>
-      <Link href="/notes/action/create" className={css.createButton}>
-        Create note
-      </Link>
       <ul className={css.menuList}>
         {TAGS.map((tag) => {
           const href =

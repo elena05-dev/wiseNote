@@ -8,6 +8,7 @@
 }
 
 .listItem {
+    position: relative;
     background: linear-gradient(135deg, #f1f0ed, #efede6);
     border-radius: 16px;
     padding: 20px;
@@ -29,7 +30,7 @@
     font-size: 1.1rem;
     font-weight: 600;
     margin: 0 0 8px 0;
-    color: #333741;
+    color: #1C3759;
 }
 
 .content {
@@ -37,7 +38,7 @@
     flex-grow: 1;
     font-size: 0.95rem;
     line-height: 1.5;
-    color: #374151;
+    color: #1C3759;
     margin-bottom: 14px;
 
     display: -webkit-box;
@@ -54,11 +55,14 @@
 }
 
 .tag {
+    position: absolute;
+    top: 16px;
+    right: 10px;
     display: inline-block;
     padding: 4px 12px;
     font-size: 18px;
     font-weight: 500;
-    color: #334141;
+    color: #1C3759;
     max-width: 120px;
     white-space: nowrap;
     overflow: hidden;
@@ -66,6 +70,9 @@
 }
 
 .link {
+    position: absolute;
+    bottom: 22px;
+    left: 22px;
     padding: 6px 12px;
     font-size: 0.9rem;
     border-radius: 8px;
@@ -73,17 +80,14 @@
     text-decoration: none;
     display: inline-block;
     transition: all 0.2s ease;
-}
-
-.link {
-    color: #fff;
-    background-color: #8D866F;
-    ;
+    color: #1C3759;
+    background-color: #CD9E60;
     border: none;
+
 }
 
 .link:hover {
-    background-color: #746E5B;
+    background-color: #D8B383;
 }
 
 .button {
@@ -95,9 +99,91 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    fill: #8D6F6F;
+    fill: #60C6CD;
 }
 
 .button:hover {
-    fill: #5B4747;
+    fill: #A6DFE3;
+}
+
+
+
+.edit {
+
+    border: none;
+    background: none;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    fill: #32619F;
+}
+
+.edit:hover {
+    fill: #608FCD;
+}
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modalContent {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .list {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .listItem {
+        min-height: 130px;
+        padding: 12px 14px;
+        border-radius: 12px;
+    }
+
+    .title {
+        font-size: 1rem;
+        margin-bottom: 6px;
+    }
+
+    .content {
+        font-size: 0.9rem;
+        -webkit-line-clamp: 3;
+        margin-bottom: 10px;
+    }
+
+    .tag {
+        font-size: 14px;
+        top: 10px;
+        right: 8px;
+    }
+
+    .link {
+        bottom: 14px;
+        left: 14px;
+        font-size: 0.8rem;
+        padding: 4px 10px;
+    }
+
+    .edit {
+        width: 26px;
+        height: 26px;
+    }
 }
