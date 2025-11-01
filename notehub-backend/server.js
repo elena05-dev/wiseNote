@@ -18,7 +18,7 @@ export const setupServer = () => {
   app.use(express.json());
   app.use(
     cors({
-      origin: 'http://localhost:3000',
+      origin: ['http://localhost:3000', 'https://wise-note-nu.vercel.app'],
       credentials: true,
     }),
   );

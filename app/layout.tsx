@@ -36,10 +36,10 @@ export const metadata: Metadata = {
     title: 'Notes',
     description:
       'An application for storing, creating, deleting, and searching notes',
-    url: `https://09-auth-azure-eight.vercel.app/`,
+    url: `https://wise-note-nu.vercel.app/`,
     images: [
       {
-        url: 'https://ac.goit.global/fullstack/react/og-meta.jpg',
+        url: 'https://wise-note-nu.vercel.app/wise-note-og.png',
         width: 1200,
         height: 630,
       },

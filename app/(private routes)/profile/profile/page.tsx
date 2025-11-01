@@ -14,11 +14,11 @@ export const metadata: Metadata = {
     title: 'User Profile - MyApp',
     description:
       'View and manage your personal profile, settings, and preferences on MyApp.',
-    url: 'https://09-auth-azure-eight.vercel.app/',
+    url: 'https://wise-note-nu.vercel.app/',
     siteName: 'MyApp',
     images: [
       {
-        url: 'https://ac.goit.global/fullstack/react/default-avatar.jpg',
+        url: 'https://wise-note-nu.vercel.app/wise-note-og.png',
         width: 1200,
         height: 630,
         alt: 'Profile page preview',
