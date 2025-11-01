@@ -3,14 +3,12 @@ import { fetchNotes } from '@/lib/api/serverApi';
 import { Metadata } from 'next';
 import type { NoteTag } from '@/types/note';
 
-type SyncProps = { params: { slug?: string[] } };
-type AsyncProps = { params: Promise<{ slug?: string[] }> };
-
 export async function generateMetadata({
   params,
-}: SyncProps): Promise<Metadata> {
-  const slug = (await Promise.resolve(params)).slug;
-  const rawTag = slug?.[0];
+}: {
+  params?: { slug?: string[] };
+}): Promise<Metadata> {
+  const rawTag = params?.slug?.[0];
   const tag: NoteTag | undefined =
     rawTag === 'All' ? undefined : (rawTag as NoteTag);
 
@@ -26,7 +24,7 @@ export async function generateMetadata({
       url: `https://09-auth-azure-eight.vercel.app/`,
       images: [
         {
-          url: 'https://ac.goit.global/fullstack/react/notehub-og-meta.jpg',
+          url: 'https://ac.goit.global/fullstack/react/notehub-og-meta.jpg', // тут можно свою OG-картинку
           width: 1200,
           height: 630,
           alt: `Notes filtered by ${tag ?? 'All'}`,
@@ -36,8 +34,12 @@ export async function generateMetadata({
   };
 }
 
-export default async function NotesPage({ params }: AsyncProps) {
-  const { slug } = await params;
+export default async function NotesPage({
+  params,
+}: {
+  params?: { slug?: string[] };
+}) {
+  const slug = params?.slug;
   const tag = slug?.[0] ?? 'All';
 
   const allowedTags: NoteTag[] = [
@@ -48,7 +50,6 @@ export default async function NotesPage({ params }: AsyncProps) {
     'Meeting',
     'Shopping',
   ];
-
   const normalizedTag = allowedTags.includes(tag as NoteTag)
     ? (tag as NoteTag)
     : 'All';
