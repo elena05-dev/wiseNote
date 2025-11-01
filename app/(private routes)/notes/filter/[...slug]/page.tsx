@@ -6,9 +6,10 @@ import type { NoteTag } from '@/types/note';
 export async function generateMetadata({
   params,
 }: {
-  params?: { slug?: string[] };
+  params: Promise<{ slug?: string[] }>;
 }): Promise<Metadata> {
-  const rawTag = params?.slug?.[0];
+  const { slug } = await params;
+  const rawTag = slug?.[0];
   const tag: NoteTag | undefined =
     rawTag === 'All' ? undefined : (rawTag as NoteTag);
 
@@ -37,9 +38,9 @@ export async function generateMetadata({
 export default async function NotesPage({
   params,
 }: {
-  params?: { slug?: string[] };
+  params: Promise<{ slug?: string[] }>;
 }) {
-  const slug = params?.slug;
+  const { slug } = await params;
   const tag = slug?.[0] ?? 'All';
 
   const allowedTags: NoteTag[] = [
