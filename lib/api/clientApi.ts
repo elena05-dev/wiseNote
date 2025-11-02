@@ -10,7 +10,7 @@ import { FetchNotesParams, FetchNotesResponse } from '@/types/note';
 
 export async function fetchCurrentUser(): Promise<User | null> {
   try {
-    const { data } = await nextServer.get<User>('/api/users/me');
+    const { data } = await nextServer.get<User>('/users/me');
     useAuthStore.getState().setAuth?.(data);
     return data;
   } catch {

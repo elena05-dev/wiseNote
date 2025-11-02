@@ -12,45 +12,26 @@ import { setupSession } from '../utils/session.js';
 export const registerUserController = async (req, res) => {
   console.log('Register controller called');
   try {
+    // Создаём пользователя
     const user = await registerUser(req.body);
     console.log('User created:', user);
-    const session = await loginUser({
-      email: req.body.email,
-      password: req.body.password,
-    });
-    console.log('Session created:', session);
-    setupSession(res, session);
 
+    // Отправляем ответ фронтенду, без логина
     res.status(201).json({
       status: 201,
-      message: 'User registered & logged in!',
-      data: {
-        user,
-        accessToken: session.accessToken,
-      },
+      message: 'User registered!',
+      data: user,
     });
   } catch (err) {
-    console.error(err);
+    console.error('Registration error:', err);
+
+    // Если email уже существует
+    if (err.code === 11000) {
+      // Mongo duplicate key error
+      return res.status(409).json({ message: 'Email already exists' });
+    }
+
     res.status(500).json({ message: 'Server error during registration' });
-  }
-};
-
-export const loginUserController = async (req, res) => {
-  try {
-    const session = await loginUser(req.body);
-
-    setupSession(res, session);
-
-    res.status(200).json({
-      message: 'User logged in successfully!',
-      data: { accessToken: session.accessToken },
-    });
-  } catch (err) {
-    console.error('Login error:', err);
-
-    const message = err.message || 'Invalid email or password';
-
-    res.status(401).json({ message });
   }
 };
 
