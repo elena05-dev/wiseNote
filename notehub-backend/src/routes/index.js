@@ -7,6 +7,6 @@ const router = Router();
 
 router.use('/api/auth', authRouter);
 router.use('/api/notes', notesRouter);
-router.use('/api/users/', usersRouter);
+router.use('/api/users/me', usersRouter);
 
 export default router;
