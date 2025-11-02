@@ -15,14 +15,17 @@ const PORT = Number(getEnvVar('PORT', '3000'));
 export const setupServer = () => {
   const app = express();
 
-  app.use(express.json());
   app.use(
     cors({
-      origin: ['https://wise-note-nu.vercel.app, http://localhost:3000'],
+      origin: [['https://wise-note-nu.vercel.app', 'http://localhost:3000']],
       credentials: true,
     }),
   );
+
+  app.use(express.json());
+
   app.use(cookieParser());
+
   app.use(
     pino({
       transport:
