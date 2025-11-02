@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   async rewrites() {
     const apiUrl =
-      process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+      process.env.NEXT_PUBLIC_API_URL + '/api' || 'http://localhost:5000/api';
     return [
       {
         source: '/api/:path*',
