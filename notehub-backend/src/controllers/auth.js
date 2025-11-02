@@ -10,14 +10,15 @@ import { getUserBySession } from '../services/auth.js';
 import { setupSession } from '../utils/session.js';
 
 export const registerUserController = async (req, res) => {
+  console.log('Register controller called');
   try {
     const user = await registerUser(req.body);
-
+    console.log('User created:', user);
     const session = await loginUser({
       email: req.body.email,
       password: req.body.password,
     });
-
+    console.log('Session created:', session);
     setupSession(res, session);
 
     res.status(201).json({
