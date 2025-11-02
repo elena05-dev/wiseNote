@@ -11,12 +11,6 @@ import { getMeController } from '../controllers/auth.js';
 import { updateUserController } from '../controllers/auth.js';
 const router = Router();
 
-router.post(
-  '/register',
-  validateBody(registerUserSchema),
-  ctrlWrapper(registerUserController),
-);
-
 router.get('/me', ctrlWrapper(getMeController));
 
 router.get('/session', ctrlWrapper(refreshUserSessionController));
