@@ -16,7 +16,7 @@ export async function getCurrentUserServer(): Promise<User | null> {
       .map(({ name, value }) => `${name}=${value}`)
       .join('; ');
 
-    const response = await nextServer.get<User>('/users/me', {
+    const response = await nextServer.get<User>('api/users/me', {
       headers: { Cookie: cookieStr },
     });
 
