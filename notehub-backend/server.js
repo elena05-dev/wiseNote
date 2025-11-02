@@ -10,17 +10,22 @@ import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
-const PORT = Number(getEnvVar('PORT', '3000'));
+const PORT = Number(getEnvVar('PORT', '3001'));
 
 export const setupServer = () => {
   const app = express();
 
   app.use(
     cors({
-      origin: 'https://wise-note-nu.vercel.app',
+      origin: 'https://wise-note-nu.vercel.app', // фронт на Vercel
       credentials: true,
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+      allowedHeaders: ['Content-Type', 'Authorization'],
     }),
   );
+
+  // Обработка preflight для всех роутов
+  app.options('*', cors());
 
   app.use(express.json());
 
