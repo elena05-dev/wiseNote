@@ -9,6 +9,7 @@ import { logoutUserController } from '../controllers/auth.js';
 import { refreshUserSessionController } from '../controllers/auth.js';
 import { getMeController } from '../controllers/auth.js';
 import { updateUserController } from '../controllers/auth.js';
+
 const router = Router();
 
 router.get('/me', ctrlWrapper(getMeController));
