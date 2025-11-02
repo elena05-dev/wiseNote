@@ -40,7 +40,7 @@ export async function loginUser(
   password: string,
 ): Promise<User> {
   try {
-    await nextServer.post('/auth/login', { email, password });
+    await nextServer.post('/api/auth/login', { email, password });
 
     const user = await fetchCurrentUser();
     if (!user) throw new Error('Failed to fetch user data after login');
