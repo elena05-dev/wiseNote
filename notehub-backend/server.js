@@ -17,7 +17,7 @@ export const setupServer = () => {
 
   app.use(
     cors({
-      origin: [['https://wise-note-nu.vercel.app', 'http://localhost:3000']],
+      origin: 'https://wise-note-nu.vercel.app',
       credentials: true,
     }),
   );
