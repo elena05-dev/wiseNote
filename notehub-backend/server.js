@@ -10,15 +10,15 @@ import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
-const PORT = Number(getEnvVar('PORT', '3001'));
+const PORT = Number(process.env.PORT) || 3001;
 
 export const setupServer = () => {
   const app = express();
 
   app.use(
     cors({
-      origin: 'https://wise-note-nu.vercel.app', // фронт на Vercel
-      credentials: true,
+      origin: 'https://wise-note-nu.vercel.app', // твой фронтенд на Vercel
+      credentials: true, // если используешь куки
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
       allowedHeaders: ['Content-Type', 'Authorization'],
     }),
@@ -30,6 +30,8 @@ export const setupServer = () => {
   app.use(express.json());
 
   app.use(cookieParser());
+
+  app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
   app.use(
     pino({
@@ -48,7 +50,7 @@ export const setupServer = () => {
   app.use(notFoundHandler);
 
   app.use(errorHandler);
-
+  console.log('Server will listen on port:', PORT);
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
