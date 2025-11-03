@@ -8,7 +8,6 @@ import { useAuthStore } from '@/lib/store/authStore';
 import type { CreateNoteData } from '@/types/note';
 import { FetchNotesParams, FetchNotesResponse } from '@/types/note';
 
-console.log('API base URL:', process.env.NEXT_PUBLIC_API_BASE_URL);
 export async function fetchCurrentUser(): Promise<User | null> {
   try {
     const { data } = await nextServer.get<User>('/users/me');
@@ -41,7 +40,10 @@ export async function loginUser(
   password: string,
 ): Promise<User> {
   try {
-    await nextServer.post('/auth/login', { email, password });
+    await nextServer.post('/auth/login', {
+      email: email.trim(),
+      password: password.trim(),
+    });
 
     const user = await fetchCurrentUser();
     if (!user) throw new Error('Failed to fetch user data after login');
