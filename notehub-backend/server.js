@@ -40,7 +40,7 @@ export const setupServer = () => {
     res.json({ status: 'ok' });
   });
 
-  app.use('/', router);
+  app.use('/api', router);
 
   app.use(notFoundHandler);
   app.use(errorHandler);
