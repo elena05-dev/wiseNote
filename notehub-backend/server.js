@@ -45,6 +45,13 @@ export const setupServer = () => {
   app.use(notFoundHandler);
   app.use(errorHandler);
 
+  console.log('CORS_ORIGIN:', process.env.CORS_ORIGIN);
+  console.log(
+    'JWT_SECRET:',
+    process.env.JWT_SECRET ? '✅ loaded' : '❌ missing',
+  );
+  console.log('PORT:', process.env.PORT);
+
   app.listen(PORT, () => {
     console.log(`✅ Server is running on port ${PORT}`);
   });

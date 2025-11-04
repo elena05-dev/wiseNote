@@ -11,9 +11,18 @@ import { FetchNotesParams, FetchNotesResponse } from '@/types/note';
 export async function fetchCurrentUser(): Promise<User | null> {
   try {
     const { data } = await nextServer.get<User>('/users/me');
+    console.log('User:', data);
     useAuthStore.getState().setAuth?.(data);
     return data;
-  } catch {
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      console.error(
+        '❌ fetchCurrentUser error:',
+        error.response?.data || error.message,
+      );
+    } else {
+      console.error('❌ fetchCurrentUser unknown error:', error);
+    }
     useAuthStore.getState().clearAuth?.();
     return null;
   }
