@@ -3,9 +3,10 @@ import { SessionsCollection } from '../db/models/Session.js';
 import { UsersCollection } from '../db/models/User.js';
 
 export const authenticate = async (req, res, next) => {
+  console.log('🔑 authenticate middleware called');
   try {
     const { sessionId, refreshToken } = req.cookies;
-
+    console.log('Cookies:', { sessionId, refreshToken });
     if (!sessionId || !refreshToken) {
       throw createHttpError(401, 'Not authenticated');
     }
@@ -28,7 +29,7 @@ export const authenticate = async (req, res, next) => {
     }
 
     req.user = user;
-
+    console.log('✅ Authentication passed:', user.email);
     next();
   } catch (err) {
     next(err);

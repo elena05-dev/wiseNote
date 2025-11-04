@@ -36,11 +36,32 @@ export const setupServer = () => {
   app.use(cors(corsOptions));
   app.options('*', cors(corsOptions));
 
+  app.use((req, res, next) => {
+    console.log('📥 Incoming request:', req.method, req.originalUrl);
+    console.log('Headers:', req.headers);
+    console.log('Cookies:', req.cookies);
+    next();
+  });
+
   app.get('/health', (req, res) => {
     res.json({ status: 'ok' });
   });
 
   app.use('/api', router);
+
+  // Обработка 404
+  app.use((req, res) => {
+    console.warn('⚠️ 404 Not Found:', req.originalUrl);
+    res.status(404).json({ error: 'Not Found' });
+  });
+
+  // Ошибки
+  app.use((err, req, res, next) => {
+    console.error('❌ Server error:', err);
+    res
+      .status(err.status || 500)
+      .json({ error: err.message || 'Internal Server Error' });
+  });
 
   app.use(notFoundHandler);
   app.use(errorHandler);
