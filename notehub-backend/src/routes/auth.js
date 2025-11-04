@@ -7,8 +7,7 @@ import { loginUserController } from '../controllers/auth.js';
 import { validateBody } from '../middlewares/validateBody.js';
 import { logoutUserController } from '../controllers/auth.js';
 import { refreshUserSessionController } from '../controllers/auth.js';
-import { getMeController } from '../controllers/auth.js';
-import { updateUserController } from '../controllers/auth.js';
+
 
 const router = Router();
 
@@ -30,6 +29,6 @@ router.post('/logout', ctrlWrapper(logoutUserController));
 
 router.post('/refresh', ctrlWrapper(refreshUserSessionController));
 
-router.patch('/me', ctrlWrapper(updateUserController));
+
 
 export default router;
