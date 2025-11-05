@@ -1,9 +1,8 @@
 import { Router } from 'express';
-import { authenticate } from '../../../../middlewares/authenticate.js';
-import { updateUserController } from '../../../../controllers/auth.js';
+import { authenticate } from '../../../middlewares/authenticate.js';
+import { updateUserController } from '../../../controllers/auth.js';
 
 const router = Router();
-
 router.get('/me', authenticate, async (req, res) => {
   console.log('Cookies:', req.cookies);
   console.log('Headers:', req.headers.authorization);
@@ -17,5 +16,4 @@ router.get('/me', authenticate, async (req, res) => {
 });
 
 router.patch('/me', authenticate, updateUserController);
-
 export default router;

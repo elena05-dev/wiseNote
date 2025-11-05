@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import notesRouter from './notes.js';
 import authRouter from './auth.js';
-import usersRouter from './api/users/me/route.js';
+import usersRouter from './api/users/route.js';
 
 const router = Router();
 
