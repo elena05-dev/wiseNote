@@ -2,6 +2,8 @@ import { Router } from 'express';
 import { authenticate } from '../../../middlewares/authenticate.js';
 import { updateUserController } from '../../../controllers/auth.js';
 
+console.log('✅ usersRouter loaded from', import.meta.url);
+
 const router = Router();
 router.get('/me', authenticate, async (req, res) => {
   console.log('Cookies:', req.cookies);

@@ -49,6 +49,17 @@ export const setupServer = () => {
 
   app.use('/api', router);
 
+  app._router.stack.forEach((r) => {
+    if (r.route && r.route.path) {
+      console.log('📍 Registered route:', r.route.path);
+    }
+  });
+
+  app.use((req, res, next) => {
+    console.log('📥 Incoming request:', req.method, req.originalUrl);
+    next();
+  });
+
   // Обработка 404
   app.use((req, res) => {
     console.warn('⚠️ 404 Not Found:', req.originalUrl);
