@@ -5,8 +5,8 @@ import usersRouter from './api/users/me/route.js';
 
 const router = Router();
 
-router.use('/api/auth', authRouter);
-router.use('/api/notes', notesRouter);
-router.use('/api/users', usersRouter);
+router.use('/auth', authRouter);
+router.use('/notes', notesRouter);
+router.use('/users', usersRouter);
 
 export default router;
