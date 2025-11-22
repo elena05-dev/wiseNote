@@ -28,6 +28,7 @@ export async function fetchCurrentUser(): Promise<User | null> {
     return null;
   }
 }
+
 export async function register(email: string, password: string): Promise<User> {
   try {
     const { data } = await nextServer.post<User>('/auth/register', {
