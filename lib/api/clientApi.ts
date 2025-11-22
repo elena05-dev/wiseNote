@@ -10,6 +10,7 @@ import { FetchNotesParams, FetchNotesResponse } from '@/types/note';
 
 export async function fetchCurrentUser(): Promise<User | null> {
   try {
+    // Используем относительный путь, baseURL уже задан
     const { data } = await nextServer.get<User>('/users/me');
     console.log('User:', data);
     useAuthStore.getState().setAuth?.(data);
@@ -27,7 +28,6 @@ export async function fetchCurrentUser(): Promise<User | null> {
     return null;
   }
 }
-
 export async function register(email: string, password: string): Promise<User> {
   try {
     const { data } = await nextServer.post<User>('/auth/register', {
@@ -112,7 +112,7 @@ export const getNotesClient = async (
   if (params.search) query.append('search', params.search);
   if (params.tag && params.tag !== 'All') query.append('tag', params.tag);
 
-  const res = await fetch(`/api/notes?${query.toString()}`, {
+  const res = await fetch(`/notes?${query.toString()}`, {
     method: 'GET',
     credentials: 'include',
   });
