@@ -103,6 +103,8 @@ interface NotesApiResponse {
   };
 }
 
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 export const getNotesClient = async (
   params: FetchNotesParams,
 ): Promise<FetchNotesResponse> => {
@@ -113,7 +115,7 @@ export const getNotesClient = async (
   if (params.search) query.append('search', params.search);
   if (params.tag && params.tag !== 'All') query.append('tag', params.tag);
 
-  const res = await fetch(`/notes?${query.toString()}`, {
+  const res = await fetch(`${API_BASE}/notes?${query.toString()}`, {
     method: 'GET',
     credentials: 'include',
   });
@@ -141,7 +143,7 @@ export const getNotesClient = async (
 };
 
 export const getNoteById = async (id: string): Promise<Note> => {
-  const res = await fetch(`/api/notes/${id}`, {
+  const res = await fetch(`${API_BASE}/notes/${id}`, {
     method: 'GET',
     credentials: 'include',
   });
@@ -163,12 +165,10 @@ export const getNoteById = async (id: string): Promise<Note> => {
 };
 
 export const createNote = async (noteData: CreateNoteData): Promise<Note> => {
-  const res = await fetch('/api/notes', {
+  const res = await fetch(`${API_BASE}/notes`, {
     method: 'POST',
     credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(noteData),
   });
 
@@ -189,7 +189,7 @@ export const createNote = async (noteData: CreateNoteData): Promise<Note> => {
 };
 
 export const deleteNote = async (id: string): Promise<void> => {
-  const res = await fetch(`/api/notes/${id}`, {
+  const res = await fetch(`${API_BASE}/notes/${id}`, {
     method: 'DELETE',
     credentials: 'include',
   });
@@ -200,9 +200,10 @@ export const deleteNote = async (id: string): Promise<void> => {
 };
 
 export async function updateNote(id: string, data: Partial<Note>) {
-  const res = await fetch(`/api/notes/${id}`, {
+  const res = await fetch(`${API_BASE}/notes/${id}`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
     body: JSON.stringify(data),
   });
 

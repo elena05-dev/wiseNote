@@ -145,13 +145,16 @@ export const fetchNotes = async (
     perPage: 12,
   };
 
-  const headers = {
-    Cookie: cookieStore.toString(),
-  };
+  const cookieStr = cookieStore
+    .getAll()
+    .map(({ name, value }) => `${name}=${value}`)
+    .join('; ');
 
-  const response = await nextServer.get<FetchNotesResponse>('/api/notes', {
+  const response = await nextServer.get<FetchNotesResponse>('/notes', {
     params,
-    headers,
+    headers: {
+      Cookie: cookieStr,
+    },
   });
 
   return response.data;
@@ -164,7 +167,7 @@ export async function getNotesServer(): Promise<Note[]> {
     .map(({ name, value }) => `${name}=${value}`)
     .join('; ');
 
-  const response = await nextServer.get<Note[]>('/api/notes', {
+  const response = await nextServer.get<Note[]>('/notes', {
     headers: { Cookie: cookieStr },
   });
 
