@@ -15,26 +15,35 @@ export default function NotesLayout({ children }: NotesLayoutProps) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let isMounted = true; // защита от обновления после размонтирования
     async function checkAuth() {
       try {
         const currentUser = await fetchCurrentUser();
-        if (!currentUser) {
-          router.push('/sign-in');
-        } else {
-          setAuth(currentUser);
+        if (isMounted) {
+          if (!currentUser) {
+            clearAuth();
+            router.replace('/sign-in'); // лучше replace, чтобы не оставлять историю
+          } else {
+            setAuth(currentUser);
+          }
         }
       } catch {
-        clearAuth();
-        router.push('/sign-in');
+        if (isMounted) {
+          clearAuth();
+          router.replace('/sign-in');
+        }
       } finally {
-        setLoading(false);
+        if (isMounted) setLoading(false);
       }
     }
 
     checkAuth();
+    return () => {
+      isMounted = false;
+    };
   }, [router, setAuth, clearAuth]);
 
-  if (loading) return null;
+  if (loading) return <div>Loading...</div>; // можно индикатор загрузки
 
   return <>{children}</>;
 }

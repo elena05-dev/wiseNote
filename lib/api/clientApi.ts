@@ -13,6 +13,7 @@ export async function fetchCurrentUser(): Promise<User | null> {
     const { data } = await nextServer.get<User>('/users/me', {
       withCredentials: true, // повторно на всякий случай
     });
+    console.log('fetchCurrentUser data:', data); // <-- добавь лог
     useAuthStore.getState().setAuth?.(data);
     return data;
   } catch (error: unknown) {
