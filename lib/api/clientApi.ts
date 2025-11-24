@@ -10,25 +10,17 @@ import { FetchNotesParams, FetchNotesResponse } from '@/types/note';
 
 export async function fetchCurrentUser(): Promise<User | null> {
   try {
-    // Используем относительный путь, baseURL уже задан
-    const { data } = await nextServer.get<User>('/users/me');
-    console.log('User:', data);
+    const { data } = await nextServer.get<User>('/users/me', {
+      withCredentials: true, // повторно на всякий случай
+    });
     useAuthStore.getState().setAuth?.(data);
     return data;
   } catch (error: unknown) {
-    if (axios.isAxiosError(error)) {
-      console.error(
-        '❌ fetchCurrentUser error:',
-        error.response?.data || error.message,
-      );
-    } else {
-      console.error('❌ fetchCurrentUser unknown error:', error);
-    }
+    console.error('❌ fetchCurrentUser error:', error);
     useAuthStore.getState().clearAuth?.();
     return null;
   }
 }
-
 export async function register(email: string, password: string): Promise<User> {
   try {
     const { data } = await nextServer.post<User>('/auth/register', {
