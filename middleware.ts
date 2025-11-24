@@ -1,19 +1,10 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { cookies } from 'next/headers';
 import { checkSession } from './lib/api/serverApi';
-import type { ResponseCookie } from 'next/dist/compiled/@edge-runtime/cookies';
-
-interface CookieWithOptions {
-  name: string;
-  value: string | undefined;
-  options?: Partial<ResponseCookie>;
-}
 
 export async function middleware(req: NextRequest) {
-  const cookieStore = await cookies();
-  const accessToken = cookieStore.get('accessToken')?.value;
-  const refreshToken = cookieStore.get('refreshToken')?.value;
+  const accessToken = req.cookies.get('accessToken')?.value;
+  const refreshToken = req.cookies.get('refreshToken')?.value;
 
   const { pathname } = req.nextUrl;
 
@@ -25,19 +16,20 @@ export async function middleware(req: NextRequest) {
 
   const session = await checkSession(accessToken, refreshToken);
 
-  // Якщо неавторизований — доступ заборонено до приватних сторінок
+  // если нет сессии — кидаем на sign-in
   if (!session.valid && isPrivatePage) {
     return NextResponse.redirect(new URL('/sign-in', req.url));
   }
 
-  // Якщо авторизований — не може відкривати auth-сторінки
+  // авторизованный не может зайти на sign-in или sign-up
   if (session.valid && isAuthPage) {
     return NextResponse.redirect(new URL('/profile', req.url));
   }
 
   const res = NextResponse.next();
+
   if (session.cookies) {
-    session.cookies.forEach((cookie: CookieWithOptions) => {
+    session.cookies.forEach((cookie) => {
       if (cookie.value !== undefined) {
         res.cookies.set(cookie.name, cookie.value, cookie.options);
       }
