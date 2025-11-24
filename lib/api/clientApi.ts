@@ -48,6 +48,7 @@ export async function loginUser(
     });
 
     const user = await fetchCurrentUser();
+    console.log(user);
     if (!user) throw new Error('Failed to fetch user data after login');
     return user;
   } catch (error) {
