@@ -16,12 +16,20 @@
 .input,
 .textarea,
 .select {
+    width: 100%;
+    box-sizing: border-box;
     margin-top: 4px;
     padding: 8px 12px;
     font-size: 14px;
     border: 1px solid #ced4da;
     border-radius: 4px;
-    resize: none;
+}
+
+.textarea {
+    resize: vertical;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .actions {

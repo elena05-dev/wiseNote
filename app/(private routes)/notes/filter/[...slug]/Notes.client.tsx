@@ -47,6 +47,7 @@ export default function NotesClient({
     queryFn: () => getNotesClient(queryParams),
     initialData,
     refetchOnMount: true,
+    refetchOnWindowFocus: false,
   });
 
   const handleSearchChange = (value: string) => {

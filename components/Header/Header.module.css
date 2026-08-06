@@ -1,20 +1,21 @@
 .header {
-    top: 0;
-    left: 0;
     width: 100%;
     border-bottom: 2px solid rgba(39, 76, 124, 0.41);
     color: #657b9a;
     background-color: #D1C8B8;
     z-index: 2200;
+
 }
 
 .container {
+    width: 100%;
+    max-width: 320px;
+    min-height: 72px;
+    margin: 0 auto;
+    padding: 0 8px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1228px;
-    margin: 0 auto;
-    padding: 0 8px;
 }
 
 
@@ -22,6 +23,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    padding-left: 8px;
 }
 
 .logo {
@@ -32,7 +34,7 @@
 
 .logoName {
     font-family: var(--font-roboto);
-    font-size: 36px;
+    font-size: 28px;
     font-weight: 600;
     color: #274c7c;
 }
@@ -105,6 +107,15 @@
 }
 
 @media (min-width: 768px) {
+    .container {
+        max-width: 753px;
+        padding: 0 24px;
+    }
+
+    .logoName {
+        font-size: 42px;
+    }
+
     .burger {
         display: none;
     }
@@ -127,7 +138,14 @@
     }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1440px) {
+    .container {
+        width: calc(100% - 64px);
+        max-width: 1700px;
+        margin: 0 auto;
+        padding: 0 32px;
+    }
+
     .logoName {
         font-size: 42px;
     }
@@ -136,13 +154,6 @@
         font-size: 1.3rem;
     }
 
-    .navigationLink {
-        text-decoration: none;
-        color: #3D77C2;
-        font-size: 20px;
-        font-weight: 700;
-        transition: color 0.2s ease;
-    }
 
     .navigationLink:hover {
         color: #83A8D8;

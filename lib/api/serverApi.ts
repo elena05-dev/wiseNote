@@ -7,6 +7,7 @@ import type { NoteTag } from '@/types/note';
 import { parse } from 'cookie';
 import type { User } from '@/types/user';
 import type { Note } from '@/types/note';
+import { normalizeNote } from './normalizeNote';
 
 export async function getCurrentUserServer(): Promise<User | null> {
   try {
@@ -189,8 +190,6 @@ export async function getNotesWithPaginationServer(
   const params: Record<string, string | number> = { page, perPage };
   if (search) params.search = search;
   if (tag) params.tag = tag;
-  console.log('baseURL:', nextServer.defaults.baseURL);
-  console.log('params:', params);
 
   const response = await nextServer.get<Note[]>('/notes', {
     params,
@@ -218,11 +217,19 @@ export async function getNotesWithPaginationServer(
 type GetNoteResponse = {
   status: number;
   message: string;
-  data: Note;
+  data: {
+    _id: string;
+    title: string;
+    content: string;
+    tag: Note['tag'];
+    createdAt: string;
+    updatedAt: string;
+  };
 };
 
 export async function getNoteByIdServer(id: string): Promise<Note> {
   const cookieStore = await cookies();
+
   const cookieStr = cookieStore
     .getAll()
     .map(({ name, value }) => `${name}=${value}`)
@@ -232,7 +239,7 @@ export async function getNoteByIdServer(id: string): Promise<Note> {
     headers: { Cookie: cookieStr },
   });
 
-  return response.data.data;
+  return normalizeNote(response.data.data);
 }
 
 export async function createNoteServer(

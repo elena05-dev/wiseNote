@@ -46,9 +46,10 @@ export default async function ProfilePage() {
           <Image
             src={user.avatar || '/user.png'}
             alt="User Avatar"
-            width={120}
-            height={120}
+            width={60}
+            height={60}
             className={css.avatar}
+            priority
           />
         </div>
         <div className={css.profileInfo}>

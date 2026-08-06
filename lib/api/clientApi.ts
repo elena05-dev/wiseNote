@@ -1,5 +1,3 @@
-'use client';
-
 import { nextServer } from './api';
 import axios from 'axios';
 import type { User } from '@/types/user';
@@ -11,17 +9,17 @@ import { FetchNotesParams, FetchNotesResponse } from '@/types/note';
 export async function fetchCurrentUser(): Promise<User | null> {
   try {
     const { data } = await nextServer.get<User>('/users/me', {
-      withCredentials: true, // повторно на всякий случай
+      withCredentials: true,
     });
-    console.log('fetchCurrentUser data:', data); // <-- добавь лог
+
     useAuthStore.getState().setAuth?.(data);
     return data;
-  } catch (error: unknown) {
-    console.error('❌ fetchCurrentUser error:', error);
-    useAuthStore.getState().clearAuth?.();
+  } catch {
+    useAuthStore.getState().clearAuth();
     return null;
   }
 }
+
 export async function register(email: string, password: string): Promise<User> {
   try {
     const { data } = await nextServer.post<User>('/auth/register', {
@@ -49,13 +47,20 @@ export async function loginUser(
     });
 
     const user = await fetchCurrentUser();
-    console.log(user);
+
     if (!user) throw new Error('Failed to fetch user data after login');
     return user;
   } catch (error) {
-    if (axios.isAxiosError(error) && error.response?.status === 401) {
-      throw new Error('Invalid email or password');
+    if (axios.isAxiosError(error)) {
+      if (error.response?.status === 401) {
+        throw new Error('Invalid email or password');
+      }
+
+      if (!error.response) {
+        throw new Error('Server is unavailable. Please try again later.');
+      }
     }
+
     throw error;
   }
 }
@@ -82,6 +87,15 @@ interface NoteFromServer {
   createdAt: string;
   updatedAt: string;
 }
+
+const normalizeNote = (note: NoteFromServer): Note => ({
+  id: note._id,
+  title: note.title,
+  content: note.content,
+  tag: note.tag as Note['tag'],
+  createdAt: note.createdAt,
+  updatedAt: note.updatedAt,
+});
 
 interface NotesApiResponse {
   status: number;
@@ -119,16 +133,8 @@ export const getNotesClient = async (
   }
 
   const data: NotesApiResponse = await res.json();
-  console.log('📦 Ответ от сервера:', data);
 
-  const notes: Note[] = data.data.data.map((note) => ({
-    id: note._id,
-    title: note.title,
-    content: note.content,
-    tag: note.tag as Note['tag'],
-    createdAt: note.createdAt,
-    updatedAt: note.updatedAt,
-  }));
+  const notes = data.data.data.map(normalizeNote);
 
   return {
     notes,
@@ -146,16 +152,11 @@ export const getNoteById = async (id: string): Promise<Note> => {
     throw new Error(`Failed to fetch note with id ${id}`);
   }
 
-  const data = await res.json();
+  const response = await res.json();
 
-  return {
-    id: data._id,
-    title: data.title,
-    content: data.content,
-    tag: data.tag as Note['tag'],
-    createdAt: data.createdAt,
-    updatedAt: data.updatedAt,
-  };
+  const data = response.data;
+
+  return normalizeNote(data);
 };
 
 export const createNote = async (noteData: CreateNoteData): Promise<Note> => {
@@ -172,14 +173,7 @@ export const createNote = async (noteData: CreateNoteData): Promise<Note> => {
 
   const data = await res.json();
 
-  return {
-    id: data._id,
-    title: data.title,
-    content: data.content,
-    tag: data.tag as Note['tag'],
-    createdAt: data.createdAt,
-    updatedAt: data.updatedAt,
-  };
+  return normalizeNote(data);
 };
 
 export const deleteNote = async (id: string): Promise<void> => {

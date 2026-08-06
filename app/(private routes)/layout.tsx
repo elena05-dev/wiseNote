@@ -7,7 +7,7 @@ export default async function Layout({
 }: {
   children: React.ReactNode;
 }) {
-  const cookieStore = await cookies(); // <- обязательно await
+  const cookieStore = await cookies();
   const sessionId = cookieStore.get('sessionId')?.value;
 
   if (!sessionId) {

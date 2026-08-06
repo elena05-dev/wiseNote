@@ -2,13 +2,13 @@ import React from 'react';
 import { Roboto } from 'next/font/google';
 import { Great_Vibes } from 'next/font/google';
 import { Agbalumo } from 'next/font/google';
-import './globals.css';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
 import TanStackProvider from '@/components/TanStackProvider/TanStackProvider';
 import { Metadata } from 'next';
 import AuthProvider from '@/components/AuthProvider/AuthProvider';
 import ClientLayout from '@/components/ClientLayout';
+import './globals.css';
 
 const roboto = Roboto({
   subsets: ['latin'],

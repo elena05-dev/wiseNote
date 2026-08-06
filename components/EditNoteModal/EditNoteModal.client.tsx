@@ -28,7 +28,7 @@ export default function EditNoteModal({ note, onClose }: EditNoteModalProps) {
           onClick={onClose}
           aria-label="Close modal"
         >
-          <svg width="22" height="22" aria-hidden="true">
+          <svg width="16" height="16" aria-hidden="true">
             <use href="#icon-close" />
           </svg>
         </button>

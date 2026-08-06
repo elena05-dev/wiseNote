@@ -41,13 +41,15 @@ export default function NoteList({ notes }: NoteListProps) {
       <ul className={css.list}>
         {notes.map((note) => (
           <li key={note.id} className={css.listItem}>
-            <h3 className={css.title}>{note.title}</h3>
+            <div className={css.header}>
+              <h3 className={css.title}>{note.title}</h3>
+              <span className={css.tag}>{note.tag}</span>
+            </div>
             <p className={css.content}>
               {note.content.substring(0, 120)}
               {note.content.length > 120 ? '…' : ''}
             </p>
             <div className={css.footer}>
-              <span className={css.tag}>{note.tag}</span>
               <div style={{ display: 'flex', gap: '8px', marginLeft: 'auto' }}>
                 <Link href={`/notes/${note.id}`} className={css.link}>
                   View details

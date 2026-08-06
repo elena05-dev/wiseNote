@@ -1,12 +1,13 @@
 .footer {
-
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
     padding: 20px;
     background-color: #f0f0f0;
     text-align: center;
     font-size: 14px;
     color: #555;
     border-top: 1px solid #ddd;
-
+    box-sizing: border-box;
 }
 
 .wrap {

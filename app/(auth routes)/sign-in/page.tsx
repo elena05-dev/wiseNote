@@ -22,7 +22,12 @@ export default function SignInPage() {
       router.push('/profile');
     } catch (err) {
       console.error('Login failed:', err);
-      setError('Invalid credentials or server error');
+
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Something went wrong. Please try again.');
+      }
     }
   };
 

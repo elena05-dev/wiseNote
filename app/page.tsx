@@ -1,5 +1,4 @@
 import css from './Home.module.css';
-import TestEnv from '@/app/TestEnv';
 
 export default function HomePage() {
   return (
@@ -18,7 +17,6 @@ export default function HomePage() {
           clarity with support for keyword search, tags, and structured
           organization.
         </p>
-        <TestEnv />
       </div>
     </main>
   );

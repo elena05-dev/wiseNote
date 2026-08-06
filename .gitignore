@@ -46,3 +46,7 @@ next-env.d.ts
 *.exe
 *.zip
 *.7z
+
+
+# VS Code
+.vscode/

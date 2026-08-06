@@ -28,7 +28,7 @@
     animation-name: worm2;
 }
 
-/* Animations */
+
 @keyframes worm1 {
     from {
         stroke-dashoffset: 0;

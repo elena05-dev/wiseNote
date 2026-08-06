@@ -3,31 +3,35 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 32px;
+    width: 100%;
+    margin: 0 auto;
+    padding-top: 16px;
+    padding-bottom: 16px;
+
 }
 
 .profileCard {
-    max-width: 500px;
     width: 100%;
+    max-width: 250px;
+    padding: 16px;
     background-color: #EEDEC9;
-    border-radius: 12px;
+    border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    padding: 24px;
     text-align: left;
+    margin: 0 auto;
 }
 
 .formTitle {
-    font-size: 32px;
-    font-weight: 700;
+    font-size: 20px;
+    font-weight: 500;
     color: #27767C;
-    margin-bottom: 24px;
-    text-align: left;
+    margin-bottom: 18px;
 }
 
 .avatarWrapper {
     display: flex;
     justify-content: center;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 
 .avatar {
@@ -36,46 +40,62 @@
 }
 
 .profileInfo {
-    font-size: 18px;
-    color: #113436;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
+    font-size: 16px;
+    color: #113436;
     align-items: flex-start;
 }
 
 .usernameWrapper {
     width: 100%;
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
 }
 
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 24px;
+    margin-bottom: 18px;
 }
 
 .editProfileButton {
-    padding: 8px 16px;
-    font-size: 16px;
-    font-weight: 600;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 500;
     background: #32989F;
     color: #113436;
     border-radius: 6px;
     text-decoration: none;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition:
+        transform 0.2s ease,
+        background-color 0.3s ease;
 }
 
 .editProfileButton:hover {
     transform: translateY(-2px) scale(1.02);
-
 }
 
 .editProfileButton:active {
     transform: translateY(1px) scale(0.98);
+}
+
+
+@media (min-width: 768px) {
+    .mainContent {
+        max-width: 500px;
+        padding: 32px;
+    }
+
+    .profileCard {
+        max-width: 500px;
+        width: 100%;
+        padding: 24px;
+    }
+
 
 }

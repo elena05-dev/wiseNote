@@ -1,11 +1,10 @@
 'use client';
 
-import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/lib/store/authStore';
 import css from './AuthNavigation.module.css';
 import Link from 'next/link';
-import { logoutUser, fetchCurrentUser } from '@/lib/api/clientApi';
+import { logoutUser } from '@/lib/api/clientApi';
 
 type AuthNavigationProps = {
   onLinkClick?: () => void;
@@ -13,24 +12,7 @@ type AuthNavigationProps = {
 
 export default function AuthNavigation({ onLinkClick }: AuthNavigationProps) {
   const router = useRouter();
-  const { user, isAuthenticated, setAuth, clearAuth } = useAuthStore();
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const userData = await fetchCurrentUser();
-        if (userData) {
-          setAuth(userData);
-        } else {
-          clearAuth();
-        }
-      } catch {
-        clearAuth();
-      }
-    };
-
-    checkAuth();
-  }, [setAuth, clearAuth]);
+  const { user, isAuthenticated, clearAuth } = useAuthStore();
 
   const handleLogout = async () => {
     try {
