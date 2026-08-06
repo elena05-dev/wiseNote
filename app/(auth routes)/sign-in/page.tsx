@@ -18,6 +18,14 @@ export default function SignInPage() {
       const password = formData.get('password') as string;
 
       const user = await loginUser(email, password);
+
+      console.log('LOGIN USER:', user);
+
+      setAuth(user);
+
+      console.log('BEFORE REDIRECT');
+
+      router.push('/profile');
       setAuth(user);
       router.push('/profile');
     } catch (err) {

@@ -16,12 +16,10 @@ export async function middleware(req: NextRequest) {
 
   const session = await checkSession(accessToken, refreshToken);
 
-  // если нет сессии — кидаем на sign-in
   if (!session.valid && isPrivatePage) {
     return NextResponse.redirect(new URL('/sign-in', req.url));
   }
 
-  // авторизованный не может зайти на sign-in или sign-up
   if (session.valid && isAuthPage) {
     return NextResponse.redirect(new URL('/profile', req.url));
   }
