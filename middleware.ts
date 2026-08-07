@@ -6,6 +6,10 @@ export async function middleware(req: NextRequest) {
   const accessToken = req.cookies.get('accessToken')?.value;
   const refreshToken = req.cookies.get('refreshToken')?.value;
 
+  console.log('MIDDLEWARE COOKIES:', {
+    accessToken,
+    refreshToken,
+  });
   const { pathname } = req.nextUrl;
 
   const isAuthPage =
