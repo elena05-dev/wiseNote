@@ -6,10 +6,6 @@ export async function middleware(req: NextRequest) {
   const accessToken = req.cookies.get('accessToken')?.value;
   const refreshToken = req.cookies.get('refreshToken')?.value;
 
-  console.log('MIDDLEWARE COOKIES:', {
-    accessToken,
-    refreshToken,
-  });
   const { pathname } = req.nextUrl;
 
   const isAuthPage =
@@ -20,11 +16,8 @@ export async function middleware(req: NextRequest) {
 
   const session = await checkSession(accessToken, refreshToken);
 
-  // if (!session.valid && isPrivatePage) {
-  //  return NextResponse.redirect(new URL('/sign-in', req.url));
-  //}
   if (!session.valid && isPrivatePage) {
-    console.log('BLOCKED BY MIDDLEWARE:', pathname);
+    return NextResponse.redirect(new URL('/sign-in', req.url));
   }
   if (session.valid && isAuthPage) {
     return NextResponse.redirect(new URL('/profile', req.url));

@@ -19,11 +19,7 @@ export default function SignInPage() {
 
       const user = await loginUser(email, password);
 
-      console.log('LOGIN USER:', user);
-
       setAuth(user);
-
-      console.log('BEFORE REDIRECT');
 
       router.push('/profile');
       setAuth(user);
