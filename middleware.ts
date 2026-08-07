@@ -20,9 +20,9 @@ export async function middleware(req: NextRequest) {
 
   const session = await checkSession(accessToken, refreshToken);
 
-  //if (!session.valid && isPrivatePage) {
-  //  return NextResponse.redirect(new URL('/sign-in', req.url));
-  // }
+  if (!session.valid && isPrivatePage) {
+    return NextResponse.redirect(new URL('/sign-in', req.url));
+  }
 
   if (session.valid && isAuthPage) {
     return NextResponse.redirect(new URL('/profile', req.url));
