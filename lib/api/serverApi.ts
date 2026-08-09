@@ -23,8 +23,19 @@ export async function getCurrentUserServer(): Promise<User | null> {
 
     return response.data;
   } catch (error: unknown) {
-    if (axios.isAxiosError(error) && error.response?.status === 401)
+    if (axios.isAxiosError(error)) {
+      console.log('GET CURRENT USER ERROR:', {
+        status: error.response?.status,
+        data: error.response?.data,
+      });
+    } else {
+      console.log('GET CURRENT USER ERROR:', error);
+    }
+
+    if (axios.isAxiosError(error) && error.response?.status === 401) {
       return null;
+    }
+
     throw error;
   }
 }
