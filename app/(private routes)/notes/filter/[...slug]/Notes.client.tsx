@@ -46,7 +46,7 @@ export default function NotesClient({
     queryKey: ['notes', page, debouncedSearch, tag],
     queryFn: () => getNotesClient(queryParams),
     initialData,
-    refetchOnMount: true,
+    refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
 
