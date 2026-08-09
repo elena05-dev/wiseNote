@@ -3,12 +3,9 @@ import type { NextRequest } from 'next/server';
 import { checkSession } from './lib/api/serverApi';
 
 export async function middleware(req: NextRequest) {
-  const accessToken = req.cookies.get('accessToken')?.value;
+  const sessionId = req.cookies.get('sessionId')?.value;
   const refreshToken = req.cookies.get('refreshToken')?.value;
-  console.log('MIDDLEWARE COOKIES:', {
-    accessToken,
-    refreshToken,
-  });
+  console.log('MIDDLEWARE COOKIES:', { sessionId, refreshToken });
 
   const { pathname } = req.nextUrl;
 
@@ -18,7 +15,7 @@ export async function middleware(req: NextRequest) {
   const isPrivatePage =
     pathname.startsWith('/profile') || pathname.startsWith('/notes');
 
-  const session = await checkSession(accessToken, refreshToken);
+  const session = await checkSession(sessionId, refreshToken);
   console.log('SESSION:', session);
 
   if (!session.valid && isPrivatePage) {
