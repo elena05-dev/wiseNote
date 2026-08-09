@@ -168,7 +168,10 @@ export const fetchNotes = async (
       Cookie: cookieStr,
     },
   });
-
+  console.log('FETCH NOTES RESPONSE:', {
+    status: response.status,
+    data: response.data,
+  });
   return response.data;
 };
 
