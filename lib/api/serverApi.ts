@@ -152,7 +152,7 @@ export const fetchNotes = async (
 
   const params: Record<string, string | number> = {
     ...(search && { search }),
-    ...(tag && tag !== 'all' ? { tag } : {}),
+    ...(tag && tag !== 'All' ? { tag } : {}),
     page,
     perPage: 12,
   };
@@ -162,17 +162,19 @@ export const fetchNotes = async (
     .map(({ name, value }) => `${name}=${value}`)
     .join('; ');
 
-  const response = await nextServer.get<FetchNotesResponse>('/notes', {
+  const response = await nextServer.get('/notes', {
     params,
     headers: {
       Cookie: cookieStr,
     },
   });
-  console.log('FETCH NOTES RESPONSE:', {
-    status: response.status,
-    data: response.data,
-  });
-  return response.data;
+
+  console.log('FETCH NOTES RESPONSE:', response.data);
+
+  return {
+    notes: response.data.data.data,
+    totalPages: response.data.data.totalPages,
+  };
 };
 
 export async function getNotesServer(): Promise<Note[]> {

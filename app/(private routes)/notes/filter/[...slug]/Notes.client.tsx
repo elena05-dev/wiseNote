@@ -39,7 +39,7 @@ export default function NotesClient({
   const queryParams: FetchNotesParams = {
     page,
     search: debouncedSearch,
-    tag,
+    tag: tag === 'All' ? undefined : tag,
   };
 
   const { data, isLoading, isFetching, error } = useQuery<FetchNotesResponse>({
