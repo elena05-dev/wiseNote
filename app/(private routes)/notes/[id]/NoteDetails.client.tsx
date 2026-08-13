@@ -1,15 +1,17 @@
 'use client';
 
 import css from './NoteDetails.module.css';
-import { useRouter, useParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { getNoteById } from '@/lib/api/clientApi';
 import type { Note } from '@/types/note';
 
-export default function NoteDetails() {
+interface NoteDetailsProps {
+  id: string;
+}
+
+export default function NoteDetails({ id }: NoteDetailsProps) {
   const router = useRouter();
-  const params = useParams();
-  const id = params?.id as string;
 
   const {
     data: note,

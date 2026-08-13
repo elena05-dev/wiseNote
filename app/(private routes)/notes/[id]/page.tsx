@@ -41,6 +41,7 @@ export async function generateMetadata({
 
 export default async function NoteDetailsPage({ params }: PageProps) {
   const { id: noteId } = await params;
+
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
@@ -50,7 +51,7 @@ export default async function NoteDetailsPage({ params }: PageProps) {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <NoteDetailsClient />
+      <NoteDetailsClient id={noteId} />
     </HydrationBoundary>
   );
 }
