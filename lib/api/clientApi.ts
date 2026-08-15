@@ -143,6 +143,7 @@ export const getNotesClient = async (
 };
 
 export const getNoteById = async (id: string): Promise<Note> => {
+  console.log('GET NOTE BY ID:', id);
   const res = await fetch(`${API_BASE}/notes/${id}`, {
     method: 'GET',
     credentials: 'include',
