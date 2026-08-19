@@ -111,7 +111,7 @@ interface NotesApiResponse {
   };
 }
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL;
+const API_BASE = '/api';
 
 export const getNotesClient = async (
   params: FetchNotesParams,
@@ -181,7 +181,7 @@ export const createNote = async (noteData: CreateNoteData): Promise<Note> => {
   return normalizeNote(data);
 };
 export const deleteNote = async (id: string): Promise<void> => {
-  const res = await fetch(`/api/notes/${id}`, {
+  const res = await fetch(`${API_BASE}/notes/${id}`, {
     method: 'DELETE',
     credentials: 'include',
   });
