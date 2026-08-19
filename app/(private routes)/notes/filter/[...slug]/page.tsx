@@ -3,6 +3,8 @@ import { fetchNotes } from '@/lib/api/serverApi';
 import { Metadata } from 'next';
 import type { NoteTag } from '@/types/note';
 
+export const dynamic = 'force-dynamic';
+
 export async function generateMetadata({
   params,
 }: {

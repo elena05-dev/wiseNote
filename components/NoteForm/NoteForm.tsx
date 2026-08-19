@@ -24,10 +24,10 @@ export default function NoteForm() {
   const mutation = useMutation({
     mutationFn: createNote,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['notes'] });
       toast.success('Note created');
       clearDraft();
-      router.push('/notes/filter/all');
+      router.push('/notes/filter/All');
+      router.refresh();
     },
     onError: (error: unknown) => {
       if (error instanceof Error) {

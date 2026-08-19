@@ -16,10 +16,18 @@ export default function NoteList({ notes }: NoteListProps) {
   const queryClient = useQueryClient();
   const [editingId, setEditingId] = useState<string | null>(null);
 
-  const { mutate: removeNote, isPending } = useMutation({
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+
+  const { mutate: removeNote } = useMutation({
     mutationFn: deleteNote,
+
     onSuccess: () => {
+      setDeletingId(null);
       queryClient.invalidateQueries({ queryKey: ['notes'] });
+    },
+
+    onError: () => {
+      setDeletingId(null);
     },
   });
 
@@ -35,7 +43,13 @@ export default function NoteList({ notes }: NoteListProps) {
   }
 
   const editingNote = notes.find((n) => n.id === editingId);
-
+  console.log(
+    'NOTE IDS:',
+    notes.map((note) => ({
+      id: note.id,
+      title: note.title,
+    })),
+  );
   return (
     <>
       <ul className={css.list}>
@@ -59,21 +73,17 @@ export default function NoteList({ notes }: NoteListProps) {
                   onClick={() => setEditingId(note.id)}
                   aria-label={`Edit note: ${note.title}`}
                 >
-                  {isPending ? (
-                    'Saving...'
-                  ) : (
-                    <svg width="32" height="32" aria-hidden="true">
-                      <use href="#icon-pencil" />
-                    </svg>
-                  )}
+                  <svg width="32" height="32" aria-hidden="true">
+                    <use href="#icon-pencil" />
+                  </svg>
                 </button>
                 <button
                   className={css.button}
                   onClick={(e) => handleDelete(note.id, e)}
-                  disabled={isPending}
+                  disabled={deletingId === note.id}
                   aria-label={`Delete note: ${note.title}`}
                 >
-                  {isPending ? (
+                  {deletingId === note.id ? (
                     'Deleting...'
                   ) : (
                     <svg width="24" height="24" aria-hidden="true">

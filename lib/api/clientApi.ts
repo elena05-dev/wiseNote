@@ -133,6 +133,9 @@ export const getNotesClient = async (
   }
 
   const data: NotesApiResponse = await res.json();
+  console.log('### FULL NOTES DATA ###', data);
+  console.log('### FIRST NOTE ###', data.data.data[0]);
+  console.log('### FIRST NOTE _id ###', data.data.data[0]?._id);
 
   const notes = data.data.data.map(normalizeNote);
 
@@ -143,7 +146,8 @@ export const getNotesClient = async (
 };
 
 export const getNoteById = async (id: string): Promise<Note> => {
-  console.log('GET NOTE BY ID:', id);
+  console.log('### CLIENT API FILE IS RUNNING ###');
+  console.log('### ID =', id);
   const res = await fetch(`${API_BASE}/notes/${id}`, {
     method: 'GET',
     credentials: 'include',

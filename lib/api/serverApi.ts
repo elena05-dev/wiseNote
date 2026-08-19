@@ -169,10 +169,8 @@ export const fetchNotes = async (
     },
   });
 
-  console.log('FETCH NOTES RESPONSE:', response.data);
-
   return {
-    notes: response.data.data.data,
+    notes: response.data.data.data.map(normalizeNote),
     totalPages: response.data.data.totalPages,
   };
 };
