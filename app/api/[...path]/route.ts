@@ -8,7 +8,9 @@ async function handler(
 ) {
   const { path } = await params;
 
-  const url = `${API_URL}/${path.join('/')}`;
+  const url = `${API_URL}/${path.join('/')}${req.nextUrl.search}`;
+
+  console.log('PROXY URL:', url);
   console.log('PROXY COOKIE:', req.headers.get('cookie'));
   const body =
     req.method !== 'GET' && req.method !== 'HEAD'
