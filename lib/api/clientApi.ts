@@ -122,7 +122,7 @@ export const getNotesClient = async (
   if (params.perPage) query.append('perPage', String(params.perPage));
   if (params.search) query.append('search', params.search);
   if (params.tag && params.tag !== 'All') query.append('tag', params.tag);
-
+  console.log('SEARCH QUERY:', query.toString());
   const res = await fetch(`${API_BASE}/notes?${query.toString()}`, {
     method: 'GET',
     credentials: 'include',
