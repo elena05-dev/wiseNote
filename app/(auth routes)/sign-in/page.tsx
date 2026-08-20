@@ -22,8 +22,6 @@ export default function SignInPage() {
       setAuth(user);
 
       router.push('/profile');
-      setAuth(user);
-      router.push('/profile');
     } catch (err) {
       console.error('Login failed:', err);
 

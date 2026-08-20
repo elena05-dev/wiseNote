@@ -7,10 +7,12 @@ import Link from 'next/link';
 import { logoutUser } from '@/lib/api/clientApi';
 
 type AuthNavigationProps = {
-  onLinkClick?: () => void;
+  onLinkClickAction?: () => void;
 };
 
-export default function AuthNavigation({ onLinkClick }: AuthNavigationProps) {
+export default function AuthNavigation({
+  onLinkClickAction,
+}: AuthNavigationProps) {
   const router = useRouter();
   const { user, isAuthenticated, clearAuth } = useAuthStore();
 
@@ -22,7 +24,7 @@ export default function AuthNavigation({ onLinkClick }: AuthNavigationProps) {
     } finally {
       clearAuth();
       router.push('/sign-in');
-      if (onLinkClick) onLinkClick();
+      if (onLinkClickAction) onLinkClickAction();
     }
   };
 
@@ -33,7 +35,7 @@ export default function AuthNavigation({ onLinkClick }: AuthNavigationProps) {
           <Link
             href="/profile"
             className={css.navigationLink}
-            onClick={onLinkClick}
+            onClick={onLinkClickAction}
           >
             Profile
           </Link>
@@ -49,14 +51,14 @@ export default function AuthNavigation({ onLinkClick }: AuthNavigationProps) {
           <Link
             href="/sign-in"
             className={css.navigationLink}
-            onClick={onLinkClick}
+            onClick={onLinkClickAction}
           >
             Login
           </Link>
           <Link
             href="/sign-up"
             className={css.navigationLink}
-            onClick={onLinkClick}
+            onClick={onLinkClickAction}
           >
             Sign up
           </Link>

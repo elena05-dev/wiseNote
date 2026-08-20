@@ -55,7 +55,7 @@ export default function Header() {
                 <TagsMenu onLinkClick={closeMenu} />
               </li>
               <li className={css.navigationItem}>
-                <AuthNavigation onLinkClick={closeMenu} />
+                <AuthNavigation onLinkClickAction={closeMenu} />
               </li>
             </ul>
           </nav>

@@ -14,8 +14,15 @@ interface EditNoteModalProps {
 export default function EditNoteModal({ note, onClose }: EditNoteModalProps) {
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
+
     document.addEventListener('keydown', handleEsc);
-    return () => document.removeEventListener('keydown', handleEsc);
+
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.removeEventListener('keydown', handleEsc);
+      document.body.style.overflow = '';
+    };
   }, [onClose]);
 
   if (!note) return null;
