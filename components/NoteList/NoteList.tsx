@@ -43,13 +43,7 @@ export default function NoteList({ notes }: NoteListProps) {
   }
 
   const editingNote = notes.find((n) => n.id === editingId);
-  console.log(
-    'NOTE IDS:',
-    notes.map((note) => ({
-      id: note.id,
-      title: note.title,
-    })),
-  );
+
   return (
     <>
       <ul className={css.list}>

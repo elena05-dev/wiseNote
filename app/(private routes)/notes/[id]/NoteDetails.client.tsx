@@ -12,7 +12,7 @@ interface NoteDetailsProps {
 
 export default function NoteDetails({ id }: NoteDetailsProps) {
   const router = useRouter();
-  console.log('### NOTE DETAILS COMPONENT 123 ###', id);
+
   const {
     data: note,
     isLoading,

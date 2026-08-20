@@ -5,7 +5,6 @@ import { checkSession } from './lib/api/serverApi';
 export async function middleware(req: NextRequest) {
   const sessionId = req.cookies.get('sessionId')?.value;
   const refreshToken = req.cookies.get('refreshToken')?.value;
-  console.log('MIDDLEWARE COOKIES:', { sessionId, refreshToken });
 
   const { pathname } = req.nextUrl;
 
@@ -16,7 +15,6 @@ export async function middleware(req: NextRequest) {
     pathname.startsWith('/profile') || pathname.startsWith('/notes');
 
   const session = await checkSession(sessionId, refreshToken);
-  console.log('SESSION:', session);
 
   if (!session.valid && isPrivatePage) {
     return NextResponse.redirect(new URL('/sign-in', req.url));
