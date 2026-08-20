@@ -26,8 +26,12 @@ export default function NoteForm() {
     onSuccess: () => {
       toast.success('Note created');
       clearDraft();
+
+      queryClient.invalidateQueries({
+        queryKey: ['notes'],
+      });
+
       router.push('/notes/filter/All');
-      router.refresh();
     },
     onError: (error: unknown) => {
       if (error instanceof Error) {

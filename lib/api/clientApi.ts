@@ -180,6 +180,7 @@ export const createNote = async (noteData: CreateNoteData): Promise<Note> => {
 
   return normalizeNote(data);
 };
+
 export const deleteNote = async (id: string): Promise<void> => {
   const res = await fetch(`${API_BASE}/notes/${id}`, {
     method: 'DELETE',
