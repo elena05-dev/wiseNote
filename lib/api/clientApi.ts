@@ -122,7 +122,7 @@ export const getNotesClient = async (
   if (params.perPage) query.append('perPage', String(params.perPage));
   if (params.search) query.append('search', params.search);
   if (params.tag && params.tag !== 'All') query.append('tag', params.tag);
-  console.log('SEARCH QUERY:', query.toString());
+
   const res = await fetch(`${API_BASE}/notes?${query.toString()}`, {
     method: 'GET',
     credentials: 'include',
@@ -134,9 +134,11 @@ export const getNotesClient = async (
 
   const data: NotesApiResponse = await res.json();
   console.log('### FULL NOTES DATA ###', data);
-  console.log('### FIRST NOTE ###', data.data.data[0]);
-  console.log('### FIRST NOTE _id ###', data.data.data[0]?._id);
-
+  console.log('### SEARCH RESULT COUNT ###', data.data.totalItems);
+  console.log(
+    '### SEARCH RESULT TITLES ###',
+    data.data.data.map((note) => note.title),
+  );
   const notes = data.data.data.map(normalizeNote);
 
   return {
