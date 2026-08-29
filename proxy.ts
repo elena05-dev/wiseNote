@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { checkSession } from './lib/api/serverApi';
 
-export async function middleware(req: NextRequest) {
+export async function proxy(req: NextRequest) {
   const sessionId = req.cookies.get('sessionId')?.value;
   const refreshToken = req.cookies.get('refreshToken')?.value;
 
