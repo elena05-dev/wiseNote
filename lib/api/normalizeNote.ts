@@ -1,6 +1,6 @@
 import type { Note } from '@/types/note';
 
-type ServerNote = {
+export type ServerNote = {
   _id: string;
   title: string;
   content: string;

@@ -1,10 +1,15 @@
 import { nextServer } from './api';
 import axios from 'axios';
 import type { User } from '@/types/user';
-import type { Note } from '@/types/note';
 import { useAuthStore } from '@/lib/store/authStore';
-import type { CreateNoteData } from '@/types/note';
-import { FetchNotesParams, FetchNotesResponse } from '@/types/note';
+import type {
+  Note,
+  CreateNoteData,
+  FetchNotesParams,
+  FetchNotesResponse,
+} from '@/types/note';
+import { normalizeNote } from './normalizeNote';
+import type { ServerNote } from './normalizeNote';
 
 export async function fetchCurrentUser(): Promise<User | null> {
   try {
@@ -79,29 +84,11 @@ export async function updateUserProfile(updates: Partial<User>): Promise<User> {
   return data;
 }
 
-interface NoteFromServer {
-  _id: string;
-  title: string;
-  content: string;
-  tag: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-const normalizeNote = (note: NoteFromServer): Note => ({
-  id: note._id,
-  title: note.title,
-  content: note.content,
-  tag: note.tag as Note['tag'],
-  createdAt: note.createdAt,
-  updatedAt: note.updatedAt,
-});
-
 interface NotesApiResponse {
   status: number;
   message: string;
   data: {
-    data: NoteFromServer[];
+    data: ServerNote[];
     page: number;
     perPage: number;
     totalItems: number;
@@ -133,7 +120,7 @@ export const getNotesClient = async (
   }
 
   const data: NotesApiResponse = await res.json();
- 
+
   const notes = data.data.data.map(normalizeNote);
 
   return {
@@ -143,7 +130,6 @@ export const getNotesClient = async (
 };
 
 export const getNoteById = async (id: string): Promise<Note> => {
- 
   const res = await fetch(`${API_BASE}/notes/${id}`, {
     method: 'GET',
     credentials: 'include',

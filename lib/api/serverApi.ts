@@ -39,15 +39,10 @@ export async function getCurrentUserServer(): Promise<User | null> {
     throw error;
   }
 }
-
 export async function updateUserProfileServer(
   data: Partial<User>,
 ): Promise<User> {
-  const cookieStore = await cookies();
-  const cookieStr = cookieStore
-    .getAll()
-    .map(({ name, value }) => `${name}=${value}`)
-    .join('; ');
+  const cookieStr = await getCookiesHeader();
 
   const response = await nextServer.patch<User>('/users/me', data, {
     headers: { Cookie: cookieStr },
@@ -57,12 +52,7 @@ export async function updateUserProfileServer(
 }
 
 export async function checkServerSession() {
-  const cookieStore = await cookies();
-  const cookieStr = cookieStore
-    .getAll()
-    .map(({ name, value }) => `${name}=${value}`)
-    .join('; ');
-
+  const cookieStr = await getCookiesHeader();
   return nextServer.get('/auth/session', {
     headers: { Cookie: cookieStr },
   });
@@ -76,11 +66,7 @@ export async function checkSession(
     if (accessToken) return { valid: true, cookies: [] };
 
     if (refreshToken) {
-      const cookieStore = await cookies();
-      const cookieStr = cookieStore
-        .getAll()
-        .map(({ name, value }) => `${name}=${value}`)
-        .join('; ');
+      const cookieStr = await getCookiesHeader();
 
       const apiRes = await nextServer.get('/auth/session', {
         headers: { Cookie: cookieStr },
@@ -148,7 +134,7 @@ export const fetchNotes = async (
   page: number,
   tag: string | undefined,
 ): Promise<FetchNotesResponse> => {
-  const cookieStore = await cookies();
+  const cookieStr = await getCookiesHeader();
 
   const params: Record<string, string | number> = {
     ...(search && { search }),
@@ -156,11 +142,6 @@ export const fetchNotes = async (
     page,
     perPage: 12,
   };
-
-  const cookieStr = cookieStore
-    .getAll()
-    .map(({ name, value }) => `${name}=${value}`)
-    .join('; ');
 
   const response = await nextServer.get('/notes', {
     params,
@@ -176,12 +157,7 @@ export const fetchNotes = async (
 };
 
 export async function getNotesServer(): Promise<Note[]> {
-  const cookieStore = await cookies();
-  const cookieStr = cookieStore
-    .getAll()
-    .map(({ name, value }) => `${name}=${value}`)
-    .join('; ');
-
+  const cookieStr = await getCookiesHeader();
   const response = await nextServer.get<Note[]>('/notes', {
     headers: { Cookie: cookieStr },
   });
@@ -195,11 +171,7 @@ export async function getNotesWithPaginationServer(
   tag: string = '',
   perPage: number = 12,
 ): Promise<{ notes: Note[]; totalPages: number }> {
-  const cookieStore = await cookies();
-  const cookieStr = cookieStore
-    .getAll()
-    .map(({ name, value }) => `${name}=${value}`)
-    .join('; ');
+  const cookieStr = await getCookiesHeader();
 
   const params: Record<string, string | number> = { page, perPage };
   if (search) params.search = search;
@@ -242,12 +214,7 @@ type GetNoteResponse = {
 };
 
 export async function getNoteByIdServer(id: string): Promise<Note> {
-  const cookieStore = await cookies();
-
-  const cookieStr = cookieStore
-    .getAll()
-    .map(({ name, value }) => `${name}=${value}`)
-    .join('; ');
+  const cookieStr = await getCookiesHeader();
 
   const response = await nextServer.get<GetNoteResponse>(`/notes/${id}`, {
     headers: { Cookie: cookieStr },
@@ -259,11 +226,7 @@ export async function getNoteByIdServer(id: string): Promise<Note> {
 export async function createNoteServer(
   note: Pick<Note, 'title' | 'content' | 'tag'>,
 ): Promise<Note> {
-  const cookieStore = await cookies();
-  const cookieStr = cookieStore
-    .getAll()
-    .map(({ name, value }) => `${name}=${value}`)
-    .join('; ');
+  const cookieStr = await getCookiesHeader();
 
   const response = await nextServer.post<Note>('/notes', note, {
     headers: { Cookie: cookieStr },
@@ -273,11 +236,7 @@ export async function createNoteServer(
 }
 
 export async function deleteNoteServer(id: string): Promise<void> {
-  const cookieStore = await cookies();
-  const cookieStr = cookieStore
-    .getAll()
-    .map(({ name, value }) => `${name}=${value}`)
-    .join('; ');
+  const cookieStr = await getCookiesHeader();
 
   await nextServer.delete(`/notes/${id}`, {
     headers: { Cookie: cookieStr },
