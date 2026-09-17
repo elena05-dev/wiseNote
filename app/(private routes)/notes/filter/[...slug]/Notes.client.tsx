@@ -46,9 +46,15 @@ export default function NotesClient({
     queryKey: ['notes', page, debouncedSearch, tag],
     queryFn: () => getNotesClient(queryParams),
     initialData,
-    refetchOnMount: true,
+    refetchOnMount: false,
     refetchOnWindowFocus: false,
   });
+
+  useEffect(() => {
+    if (data && page > data.totalPages) {
+      setPage(data.totalPages);
+    }
+  }, [data, page]);
 
   const handleSearchChange = (value: string) => {
     setSearch(value);

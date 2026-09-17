@@ -23,16 +23,18 @@ export default function NoteForm() {
 
   const mutation = useMutation({
     mutationFn: createNote,
-    onSuccess: () => {
+    onSuccess: async () => {
       toast.success('Note created');
       clearDraft();
 
-      queryClient.invalidateQueries({
+      await queryClient.invalidateQueries({
         queryKey: ['notes'],
+        refetchType: 'all',
       });
 
       router.push('/notes/filter/All');
     },
+
     onError: (error: unknown) => {
       if (error instanceof Error) {
         toast.error(error.message);
