@@ -15,11 +15,7 @@ const TAGS: NoteTag[] = [
   'Shopping',
 ];
 
-export default function TagsMenu({
-  onLinkClick,
-}: {
-  onLinkClick?: () => void;
-}) {
+export default function TagsMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
@@ -59,7 +55,6 @@ export default function TagsMenu({
                   tag === 'All' ? '/notes/filter/All' : `/notes/filter/${tag}`
                 }
                 className={css.menuLink}
-                onClick={onLinkClick}
               >
                 <span>{tag}</span>
               </Link>

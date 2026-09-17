@@ -52,7 +52,7 @@ export default function Header() {
           <nav className={css.mobileNav}>
             <ul className={css.navigation}>
               <li className={css.navigationItem}>
-                <TagsMenu onLinkClick={closeMenu} />
+                <TagsMenu />
               </li>
               <li className={css.navigationItem}>
                 <AuthNavigation onLinkClickAction={closeMenu} />

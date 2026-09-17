@@ -32,18 +32,16 @@ export const metadata: Metadata = {
   title: 'WiseNote',
   description:
     'An application for storing, creating, deleting, and searching notes',
+
+  icons: {
+    icon: '/icons8-знание-50.png',
+  },
+
   openGraph: {
     title: 'Notes',
     description:
       'An application for storing, creating, deleting, and searching notes',
-    url: `https://wise-note-nu.vercel.app/`,
-    images: [
-      {
-        url: 'https://wise-note-nu.vercel.app/wise-note-og.png',
-        width: 1200,
-        height: 630,
-      },
-    ],
+    url: 'https://wise-note-nu.vercel.app/',
   },
 };
 
